@@ -136,7 +136,8 @@ better_find_files = function(opts)
       local entry = action_state.get_selected_entry()
       if entry[1] then
         local file_name = entry[1]
-        for _, ending in ipairs(external_file_types) do
+        for _, extension in ipairs(external_file_types) do
+          local ending = "." .. extension
           if file_name:sub(-#ending) == ending then
             actions.close(prompt_bufnr)
             os.execute(external_open_cmd .. " " .. file_name)
