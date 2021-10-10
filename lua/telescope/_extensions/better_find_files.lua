@@ -159,8 +159,8 @@ end
 
 return telescope.register_extension {
   setup = function(ext_config)
-    external_file_types = ext_conf.external_file_types or {"pdf", "png", "jpg", "gif", "mp4"}
-    external_open_cmd = ext_conf.external_open_cmd or "xdg-open"
+    external_file_types = ext_config.external_file_types or {"pdf", "png", "jpg", "gif", "mp4"}
+    external_open_cmd = ext_config.external_open_cmd or "xdg-open"
   end,
   exports = {
     better_find_files = better_find_files
