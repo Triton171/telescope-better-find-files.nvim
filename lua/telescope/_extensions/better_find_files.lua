@@ -4,6 +4,9 @@ if not has_telescope then
 end
 
 
+local actions = require "telescope.actions"
+local action_state = require "telescope.actions.state"
+local action_set = require "telescope.actions.set"
 local make_entry = require "telescope.make_entry"
 local conf = require("telescope.config").values
 local log = require "telescope.log"
@@ -128,18 +131,17 @@ better_find_files = function(opts)
 
   opts.entry_maker = opts.entry_maker or make_entry.gen_from_file(opts)
 
-  -- Allow opening external files
-  -- TODO: Untested
   opts.attach_mappings = function(prompt_bufnr, map)
     actions.select_default:replace(function()
       local entry = action_state.get_selected_entry()
       if entry[1] then
         local file_name = entry[1]
-        local ending = ".pdf"
-        if file_name:sub(-#ending) == ending then
-          actions.close(prompt_bufnr)
-          os.execute("xdg-open " .. file_name)
-          return nil
+        for _, ending in ipairs(external_file_types) do
+          if file_name:sub(-#ending) == ending then
+            actions.close(prompt_bufnr)
+            os.execute(external_open_cmd .. " " .. file_name)
+            return nil
+          end
         end
         action_set.edit(prompt_bufnr, "edit")
       end
