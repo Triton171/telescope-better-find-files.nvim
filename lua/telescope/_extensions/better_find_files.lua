@@ -140,7 +140,7 @@ better_find_files = function(opts)
           local ending = "." .. extension
           if file_name:sub(-#ending) == ending then
             actions.close(prompt_bufnr)
-            os.execute(external_open_cmd .. " " .. file_name)
+            os.execute(external_open_cmd .. " \"" .. file_name .. "\"")
             return nil
           end
         end
